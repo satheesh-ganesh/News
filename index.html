@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+    <title>Breaking News</title>
+    <link rel="icon" href="newsicon.png" >
+    <style>
+        body {
+            background-color: white;
+        }
+        
+        .scontainer {
+            display: inline-block;
+            width: 280px;
+            height: 341px;
+            margin: 25px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid lightgray;
+            -webkit-box-shadow: 0px 0px 10px 1px rgba(119, 119, 119, 0.25);
+            -moz-box-shadow: 0px 0px 10px 1px rgba(119, 119, 119, 0.25);
+            box-shadow: 0px 0px 10px 1px rgba(119, 119, 119, 0.25);
+        }
+        
+        .scontainer:hover {
+            border-radius: 0px;
+            background-color: white;
+            box-shadow: 10px 10px white;
+            overflow: hidden;
+            -webkit-box-shadow: 0px 0px 10px 1px rgba(119, 119, 119, 0.75);
+            -moz-box-shadow: 0px 0px 10px 1px rgba(119, 119, 119, 0.75);
+            box-shadow: 0px 0px 10px 1px rgba(119, 119, 119, 0.75);
+        }
+        
+        .picdiv {
+            width: 100%;
+            height: 46%;
+            overflow: hidden;
+        }
+        
+        .pics {
+            width: 100%;
+            height: 103%;
+            border-radius: 6px 6px 0px 0px;
+            display: block;
+            overflow: hidden;
+            transition: transform 0.4s;
+            display: block;
+        }
+        
+        .pics:hover {
+            transform: scale(1.1);
+        }
+        
+        .title {
+            letter-spacing: 0.25px;
+            color: black;
+            position: absolute;
+            top: 18px;
+            text-align: justify;
+            left: 15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            font-family: "Roboto", sans-serif;
+            font-size: 16px;
+        }
+        
+        .des {
+            color: darkgray;
+            font-size: 14px;
+            position: absolute;
+            top: 74px;
+            left: 15px;
+            text-align: justify;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 4;
+            font-family: "Roboto", sans-serif;
+        }
+        
+        .publish {
+            position: absolute;
+            top: 164px;
+            left: 15px;
+            font-family: "Roboto", sans-serif;
+            font-size: 10px;
+            color: gray;
+            text-align: justify;
+        }
+        
+        .author {
+            position: absolute;
+            top: 162px;
+            right: 12px;
+            font-family: "Roboto", sans-serif;
+            font-size: 10px;
+            color: gray;
+            top: 164px;
+            right: 0px;
+            text-align: justify;
+        }
+        
+        #content {
+            padding: 7px;
+            position: relative;
+            height: 100%;
+            width: 89%;
+        }
+        
+        #list {
+            background-color: blue;
+            display: flex;
+            
+        }
+        
+        .ip {
+            padding: 15px;
+            background-color: blue;
+            color: white;
+            font-size: 16px;
+            border: none;
+        }
+        
+        .ip:hover {
+            background-color: white;
+            color: black;
+            cursor: pointer;
+        }
+        
+        #searchbox {
+            background-color: white;
+            font-size: 16px;
+            width: 42%;
+            padding: 8px;
+            margin-left: 10px;
+            background-image: url('./search.png');
+            margin-left: 30px;
+        }
+        .load {
+         margin-top: 125px;
+         margin-left: 500px;
+        }
+        #head {
+       color: white;
+       font-size: larger;
+       margin-left: 30px;
+       font-family: "Roboto", sans-serif;
+
+        }
+        
+        .option {
+            margin-left: 338px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='list'>
+        <div>
+        <span id="head">24/7 NEWS </span>
+        <input id="searchbox" type="text" placeholder="search">
+        <button class="ip" type='submit' onclick="doSearch()">Search</button>
+        </div>
+        <div class="option">
+        <input class="ip" type='button' onclick="Breakingnews(this.value)" value="Politics" name='Politics'>
+        <input class="ip" type='button' onclick="Breakingnews(this.value)" value="Cinema" name='Cinema'>
+        <input class="ip" type='button' onclick="Breakingnews(this.value)" value="Headlines" name='Headlines'>
+        <input class="ip" type='button' onclick="Breakingnews(this.value)" value="Sports" name='Sports'>
+        <input class="ip" type='button' onclick="Breakingnews(this.value)" value="Breaking" name='world'>
+    </div>
+    </div>
+
+    <div id="maincontainer"></div>
+
+    <script>
+        function doSearch() {
+            let search = document.getElementById('searchbox').value;
+            console.log(search);
+            Breakingnews(search);
+
+        }
+
+        function Breakingnews(value) {
+            let main = document.getElementById('maincontainer');
+            main.innerHTML = '';
+            let loading = document.createElement('img');
+            loading.src = "https://media1.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif?cid=790b76111cc4e63b5a4f92749f6e87c524d41ac98131ddaa&rid=giphy.gif";
+            //mainDoc.innerHTML = 'Loading ' + value + ' content... Please wait...';
+            loading.className = "load";
+            main.appendChild(loading);
+  
+            var Api =
+                "https://newsapi.org/v2/everything?q=" + value + "&apiKey=c7e82eb784b048bdb3206b5a60cc3230";
+
+            fetch(Api)
+                .then(response => response.json())
+                .then(response => {
+                    let container = document.createElement("div");
+                    container.className = "container";
+                    if (response && response.articles && response.articles.length > 0) {
+                        response.articles.forEach(arry => {
+                            let scontainer = document.createElement("div");
+                            scontainer.className = "scontainer";
+                            let image = document.createElement("img");
+                            image.className = "pics";
+                            image.src = arry.urlToImage;
+                            let title = document.createElement("para");
+                            title.innerText = arry.title;
+                            title.className = "title";
+                            let des = document.createElement("para");
+                            des.innerText = arry.description;
+                            des.className = "des";
+                            let publish = document.createElement("para");
+                            publish.innerText = arry.publishedAt;
+                            publish.className = "publish";
+                            let author = document.createElement("para");
+                            author.innerText = arry.author;
+                            author.className = "author";
+                            let link = document.createElement("a");
+                            link.href = arry.url;
+                            link.target = "_blank";
+                            let picdiv = document.createElement("div");
+                            picdiv.className = "picdiv";
+                            let content = document.createElement('div');
+                            content.id = "content";
+                            
+                            content.appendChild(title);
+                            content.appendChild(des);
+                            content.appendChild(publish);
+                            content.appendChild(author);
+                            picdiv.appendChild(image);
+                            scontainer.appendChild(picdiv);
+                            scontainer.appendChild(content);
+                            link.appendChild(scontainer);
+                            container.appendChild(link);
+                        });
+                    }
+                    main.innerHTML = null;
+                    main.append(container);
+                });
+        }
+        Breakingnews('india');
+    </script>
+</body>
+
+</html>
